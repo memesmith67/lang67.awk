@@ -7,7 +7,7 @@ lang67(){ #license: 2026 john morris beck gpl2 @ gnu.org
 	print "#include <string.h>";
 	print "#include <stdint.h>";
 	print "int main(void){"
-	print "int i0=NULL,i1=NULL,i2=NULL,i3=NULL,i4=NULL,i5=NULL,i6=NULL,i7=NULL;"
+	print "int i0=0,i1=0,i2=0,i3=0,i4=0,i5=0,i6=0,i7=0;"
 	print "void* p0=NULL,p1=NULL,p2=NULL,p3=NULL,p4=NULL,p5=NULL,p6=NULL,p7=NULL;"
 	indent=1;
     }
