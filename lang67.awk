@@ -9,6 +9,19 @@ lang67(){ #license: 2026 john morris beck gpl2 @ gnu.org
 	print "int main(void){";
 	print "int i0=0,i1=0,i2=0,i3=0,i4=0,i5=0,i6=0,i7=0;";
 	print "void *p0=NULL,*p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL,*p5=NULL,*p6=NULL,*p7=NULL;";
+	j["loop"]="while(" $2 "){";
+	j["end"]="}";
+	j["exit"]="exit(0)";
+	j["operate"]=$2 "=" $3 " " $4 " " $5;
+	j["assign"]=$2 "=" $3;
+	j["get"]=$2 "=*(void**)(" $3 ")";
+	j["set"]="*(void**)(" $2 ")=" $3;
+	j["jump"]=$2 "=(void*)((char*)" $2 " + (intptr_t)(" $3 "))";
+	j["allocate"]=$3 "=malloc(" $2 ")";
+	j["isnull"]=$2 "=(" $3 "==NULL)";
+	j["free"]="free(" $2 ")";
+	j["read"]="fread(" $2 ",1,(size_t)" $3 ",stdin)";
+	j["write"]="fwrite(" $2 ",1,(size_t)" $3 ",stdout);fflush(stdout)";
     }
     {
 	if($0=="inline"){inline=!inline}
@@ -16,20 +29,7 @@ lang67(){ #license: 2026 john morris beck gpl2 @ gnu.org
 	    print $0
 	}
 	else{
-	    if($1=="loop"){j="while(" $2 "){"}
-	    else if($1=="end"){j="}"}
-	    else if($1=="exit"){j="exit(0)"}
-	    else if($1=="operate"){j=$2 "=" $3 " " $4 " " $5}
-	    else if($1=="assign"){j=$2 "=" $3}
-	    else if($1=="get"){j=$2 "=*(void**)(" $3 ")"}
-	    else if($1=="set"){j="*(void**)(" $2 ")=" $3}
-	    else if($1=="jump"){j=$2 "=(void*)((char*)" $2 " + (intptr_t)(" $3 "))"}
-	    else if($1=="allocate"){j=$3 "=malloc(" $2 ")"}
-	    else if($1=="isnull"){j=$2 "=(" $3 "==NULL)"}
-	    else if($1=="free"){j="free(" $2 ")";}
-	    else if($1=="read"){j="fread(" $2 ",1,(size_t)" $3 ",stdin)"}
-	    else if($1=="write"){j="fwrite(" $2 ",1,(size_t)" $3 ",stdout);fflush(stdout)"}
-	    print j ";";
+	    print j[$1] ";";
 	}
     }
     ' > "$1.c" ;
