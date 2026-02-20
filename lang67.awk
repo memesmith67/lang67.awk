@@ -6,7 +6,7 @@
 	j["exit"]="exit(0)";
 	j["size"]=$2 "=sizeof(" $3 ")";
 	j["operate"]=$2 "=" $3 " " $4 " " $5;
-	j["assign"]=$2 "=" $3;p
+	j["assign"]=$2 "=" $3;
 	j["get"]=$2 "=*(" $3 "*)(" $4 ")";
 	j["set"]="*(" $2 "*)(" $3 ")=" $4;
 	j["jump"]=$2 "=(void*)((char*)" $2 " + (intptr_t)(" $3 "))";
@@ -15,8 +15,7 @@
 	j["read"]="fread(" $2 ",1,(size_t)" $3 ",stdin)";
 	j["write"]="fwrite(" $2 ",1,(size_t)" $3 ",stdout);fflush(stdout)";
 	if($0=="inline"){inline=!inline}
-	else if(inline){
-	    print $0
-	}
+	else if(inline){print}
 	else if(j[$1]==""){exit(1)}
-	else{printfff j[$1] ";"}}
+	else{print j[$1] ";"}}
+
