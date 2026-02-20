@@ -2,10 +2,10 @@
 #licensed 2026 john morris beck gpl2 @ gnu.org
 #note to self use tmpfiles as arrays
 mcr(){ sh|sh;};
-lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph",*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp;
+lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp";
 	j["loop"]="while("$2"){";
 	j["end"]="}";
-	j["return"]="return "$1;
+	j["return"]="return "$2;
 	j["size"]=$2"=sizeof("$3")";
 	j["operate"]=$2"="$3" "$4" "$5;
 	j["assign"]=$2"="$3;
