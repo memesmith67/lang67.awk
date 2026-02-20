@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 #licensed 2026 john morris beck gpl2 @ gnu.org
 #note to self use tmpfiles as arrays
-mcr(){ sh|sh;};
 lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp";
 	j["loop"]="while("$2"){";
 	j["end"]="}";
@@ -15,10 +14,13 @@ lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,i
 	j["allocate"]=$2"=malloc("$3")";
 	j["free"]="free("$2")";
 	j["mmap"]=$2"=mmap("$3","$4","$5","$6","$7","$8")";
-	j["munmap]=$2"=munmap("$3","$4")";
+	j["munmap"]=$2"=munmap("$3","$4")";
 	j["read"]="fread("$2",1,(size_t)"$3",stdin)";
 	j["write"]="fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout)";
 	if($0=="inline"){inline=!inline}
 	else if(inline){print}
 	else{print j[$1] ";"}}';};
 fastcc(){ gcc -O3 -march=native -ffast-math -flto -shared -fPIC -x c -o "$1.exe" -;};
+mcr(){  mkfifo "/tmp/mcr$$"in "/tmp/mcr$$"out; sh<"/tmp/mcr$$"in| sh>"/tmp/mcr$$"out &};
+mcr_eval(){ cat "$1" > "/tmp/mcr$$"in;};
+
