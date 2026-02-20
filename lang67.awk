@@ -18,7 +18,7 @@ lang67(){ #license: 2026 john morris beck gpl2 @ gnu.org
 	j["set"]="*(" $2 "*)(" $3 ")=" $4;
 	j["jump"]=$2 "=(void*)((char*)" $2 " + (intptr_t)(" $3 "))";
 	j["allocate"]=$3 "=malloc(" $2 ")";
-	j["free"]=="free(" $2 ")";
+	j["free"]="free(" $2 ")";
 	j["read"]="fread(" $2 ",1,(size_t)" $3 ",stdin)";
 	j["write"]="fwrite(" $2 ",1,(size_t)" $3 ",stdout);fflush(stdout)";
 	print j[$1] ";"}}' ; } ;
