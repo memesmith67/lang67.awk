@@ -12,8 +12,10 @@ lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,i
 	j["get"]=$2 "=*("$3"*)("$4")";
 	j["set"]="*("$2"*)("$3")="$4;
 	j["jump"]=$2"=(void*)((char*)"$2" + (intptr_t)("$3"))";
-	j["allocate"]=$3"=malloc("$2")";
+	j["allocate"]=$2"=malloc("$3")";
 	j["free"]="free("$2")";
+	j["mmap"]=$2"=mmap("$3","$4","$5","$6","$7","$8")";
+	j["munmap]=$2"=munmap("$3","$4")";
 	j["read"]="fread("$2",1,(size_t)"$3",stdin)";
 	j["write"]="fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout)";
 	if($0=="inline"){inline=!inline}
