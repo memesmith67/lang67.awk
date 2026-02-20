@@ -1,5 +1,5 @@
 #!/usr/bin/env awk
-#licensed 2026 john morris beck gpl2 @ gnu.org 
+#lang67 licensed 2026 john morris beck gpl2 @ gnu.org 
 {j["declare"]="int i0=0,i1=0,i2=0,i3=0,i4=0,i5=0,i6=0,i7=0;void *p0=NULL,*p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL,*p5=NULL,*p6=NULL,*p7=NULL";
 	j["loop"]="while(" $2 "){";
 	j["end"]="}";
