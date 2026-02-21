@@ -21,10 +21,8 @@ lang67(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,i
 	else if(inline){print}
 	else{print j[$1] ";"}}';};
 fastcc(){ gcc -O3 -march=native -ffast-math -flto -shared -fPIC -x c -o "$1.exe" -;};
-mcr(){  mkfifo "/tmp/mcr$$"in "/tmp/mcr$$"out; sh<"/tmp/mcr$$"in| sh>"/tmp/mcr$$"out &};
-mcr_send(){ cat > "/tmp/mcr$$"in;}
-foolang(){ mcr;
-mcr_send << 'EOF'
-some langauage
-EOF
-;};
+mcr(){  trap "rm /tmp/mcr$$in /tmp/mcr$$out" EXIT; mkfifo "/tmp/mcr$$"in "/tmp/mcr$$"out;sh -c "$1"<"/tmp/mcr$$"in|sh>"/tmp/mcr$$"out &};
+mcr_send(){ cat > "/tmp/mcr$$"in;};
+foolang(){ mcr '
+	   some langauage
+';};
