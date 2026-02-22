@@ -65,15 +65,16 @@ awk_comb(){ awk '{if($1=="-"){r[$2]-=r[$3]}
 
 #because both the awk comb and the c comb have things like arithmetic, memory management, reading,, and printing, that means taht
 #I don't have to include that kind of stuff necessarily in the implementation of this forth. So this forth wont for example have the + keyword.
-sovlavra67365(){ awk '{gsub(/ /,"\n");print}'|awk '{#this is gonna be a forth
-    call_stack[call_stack_head++]=dictionary[$0];
-    if(string){string!=0;stack[stack_head++]=$0}
-    else if(dictionary[$0]=="\""){if(building_string){string=1}
-    else if($0=="define"){naming=1}
-    else if(naming){naming=0;dictionary[$0]=stack[head--]}
-    else{
-
-    }
+sovlavra67365(){ awk '{gsub(/ /,"\n");print}'|awk '{
+if(naming){new_name=$0;naming=0;defining=1}
+else if($0==";"){defining=0;dictionary[new_name]=definitio\
+n;definition=0}
+else if(submacro){definition=definition " " dictionary[$0]\
+;submacro=0}
+else if($0=="submacro"){submacro=1}
+else if(defining){definition=definition " " $0}
+else if($0=="macro"){naming=1}
+else{print $0}
 }';};
 
 #this is an example which is close to how the full pipeline of the language might look. Except that I would want to keep sovlavra|awk_comb running
