@@ -18,25 +18,24 @@ optimized_cc(){ gcc -O3 -march=native -ffast-math -flto -shared -fPIC -x c -o "$
 
 #one thing worth noting is that this is intended to be used to generate very small c files that share memory across processes using mmap. This is a scheme
 #to make JITs that compile to c instead fo asm and are machine architecture independent.
-c_comb(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp";
-	j["loop"]="while("$2"){";
-	j["end"]="}";p
-	j["return"]="return "$2;
-   	j["size"]=$2"=sizeof("$3")";
-	j["operate"]=$2"="$3" "$4" "$5;
-	j["assign"]=$2"="$3;
-	j["get"]=$2 "=*("$3"*)("$4")";
-	j["set"]="*("$2"*)("$3")="$4;
-	j["jump"]=$2"=(void*)((char*)"$2" + (intptr_t)("$3"))";
-	j["allocate"]=$2"=malloc("$3")";
-	j["free"]="free("$2")";
-	j["mmap"]=$2"=mmap("$3","$4","$5","$6","$7","$8")";
-	j["munmap"]=$2"=munmap("$3","$4")";
-	j["read"]="fread("$2",1,(size_t)"$3",stdin)";
-	j["write"]="fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout)";
-	if($0=="inline"){inline=!inline}
-	else if(inline){print}
-	else{print j[$1] ";"}}';};
+c_comb(){ awk '$0=="declare"{print "int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp;"}
+	inline{print}
+	$0=="loop"{print "while("$2"){;"}
+	$0=="end"{print "};"}
+	$0=="return"{print "return "$2";"}
+   	$0=="size"{print =$2"{sizeof("$3");"}
+	$0=="operate"{print $2"="$3" "$4" "$5";"}
+	$0=="assign"{print $2"="$3";"}
+	$0=="get"{print $2 "=*("$3"*)("$4");"}
+	$0=="set"{print "*("$2"*)("$3")="$4";"}
+	$0=="jump"{print $2"=(void*)((char*)"$2" + (intptr_t)("$3"));"}
+	$0=="allocate"{print $2"=malloc("$3");"}
+	$0=="free"{print "free("$2");"}
+	$0=="mmap"{print $2"=mmap("$3","$4","$5","$6","$7","$8");"}
+	$0=="munmap"{print $2"=munmap("$3","$4");"}
+	$0=="read"{print "fread("$2",1,(size_t)"$3",stdin);"}
+	$0=="write"{print "fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout);"}
+	$0=="inline"{inline=!inline}';};
 
 #this is a small virtual machine that ideally will do everything awk can do. it is true that this could be re-written in the c_comb language
 #above, howeer that would take up many lines of code, and reqquire some bootstrapping. I want it to be seamless for the user to get this compiler
