@@ -20,22 +20,22 @@ optimized_cc(){ gcc -O3 -march=native -ffast-math -flto -shared -fPIC -x c -o "$
 #to make JITs that compile to c instead fo asm and are machine architecture independent.
 c_comb(){ awk '$0=="declare"{print "int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,ip;void *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm,*pn,*po,*pp;"}
 	inline{print}
-	$0=="loop"{print "while("$2"){;"}
-	$0=="end"{print "};"}
-	$0=="return"{print "return "$2";"}
-   	$0=="size"{print =$2"{sizeof("$3");"}
-	$0=="operate"{print $2"="$3" "$4" "$5";"}
-	$0=="assign"{print $2"="$3";"}
-	$0=="get"{print $2 "=*("$3"*)("$4");"}
-	$0=="set"{print "*("$2"*)("$3")="$4";"}
-	$0=="jump"{print $2"=(void*)((char*)"$2" + (intptr_t)("$3"));"}
-	$0=="allocate"{print $2"=malloc("$3");"}
-	$0=="free"{print "free("$2");"}
-	$0=="mmap"{print $2"=mmap("$3","$4","$5","$6","$7","$8");"}
-	$0=="munmap"{print $2"=munmap("$3","$4");"}
-	$0=="read"{print "fread("$2",1,(size_t)"$3",stdin);"}
-	$0=="write"{print "fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout);"}
-	$0=="inline"{inline=!inline}';};
+	$1=="loop"{print "while("$2"){;"}
+	$1=="end"{print "};"}
+	$1=="return"{print "return "$2";"}
+   	$1=="size"{print =$2"{sizeof("$3");"}
+	$1=="operate"{print $2"="$3" "$4" "$5";"}
+	$1=="assign"{print $2"="$3";"}
+	$1=="get"{print $2 "=*("$3"*)("$4");"}
+	$1=="set"{print "*("$2"*)("$3")="$4";"}
+	$1=="jump"{print $2"=(void*)((char*)"$2" + (intptr_t)("$3"));"}
+	$1=="allocate"{print $2"=malloc("$3");"}
+	$1=="free"{print "free("$2");"}
+	$1=="mmap"{print $2"=mmap("$3","$4","$5","$6","$7","$8");"}
+	$1=="munmap"{print $2"=munmap("$3","$4");"}
+	$1=="read"{print "fread("$2",1,(size_t)"$3",stdin);"}
+	$1=="write"{print "fwrite("$2",1,(size_t)"$3",stdout);fflush(stdout);"}
+	$1=="inline"{inline=!inline}';};
 
 #this is a small virtual machine that ideally will do everything awk can do. it is true that this could be re-written in the c_comb language
 #above, howeer that would take up many lines of code, and reqquire some bootstrapping. I want it to be seamless for the user to get this compiler
