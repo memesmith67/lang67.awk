@@ -44,17 +44,17 @@ c_comb(){ awk '{j["declare"]="int ia,ib,ic,id,ie,if,ig,ih,ii,ij,ik,il,im,in,io,i
 
 #grok has complained tthat this layer adds complexity to a user who wants to learn how the entire compiler stack works. that is certainly true. it requires
 #for the user to learn another asm language as well as potentially to learn awk.
-awk_comb(){ awk '{if($1=="-"){r[$2]-=r[$3]}
-	    	    else if($1=="<"){r[$2]=r[$2]<r[$3]}
-		    else if($1=="m"){r[$3]=r[$2]}
-		    else if($1=="$"){r[$2]=system(r[$3])}
-		    else if($1=="r"){r[$2]=r[r[$3]]}
-		    else if($1=="w"){r[r[$3]]=r[$2]}
-		    else if($1=="i"){getline r[$2]}
-		    else if($1=="o"){printf "%s",r[$2]}
-		    else if($1=="+"){r[$2]=r[$2] r[$3]}
-		    else if($1=="c"){r[$2]=sprintf("%c",r[$3])}
-		    else if($1=="s"){r[$2]=substr(r[$2],r[$3],1)}';};
+awk_comb(){ awk '$1=="-"{r[$2]-=r[$3]}
+	    	    $1=="<"{r[$2]=r[$2]<r[$3]}
+		        $1=="m"{r[$3]=r[$2]}
+		        $1=="$"{r[$2]=system(r[$3])}
+		        $1=="r"{r[$2]=r[r[$3]]}
+		        $1=="w"{r[r[$3]]=r[$2]}
+		        $1=="i"{getline r[$2]}
+		        $1=="o"{printf "%s",r[$2]}
+		        $1=="+"{r[$2]=r[$2] r[$3]}
+		        $1=="c"{r[$2]=sprintf("%c",r[$3])}
+		        $1=="s"{r[$2]=substr(r[$2],r[$3],1)}';};
 
 #this is intended to be a very spartan forth which has a design very different from how classical forth works. This forth really only has the ability to
 #compose anonymous functions and push them to the stack, to name things that are on the stack as variables, and to call variables as functions that
