@@ -6,7 +6,7 @@
 
 #this is below the level of understanding that the user is intended to go. the user isnt intended to care how gcc works, only that
 #it is invoked to make the code runnable.
-optimized_cc(){ gcc -O3 -march=native -ffast-math -flto -shared -fPIC -x c -o "$1.exe" -;};
+cc(){ tcc -run -;};
 
 #this is a replacement for asm langauge. the user isnt intended to think of asm as the baseape of the system, but to think of c as the base of the system
 #this attempts to simplify c so that works much more like an assembly language. adding in things like includes or functions is done
